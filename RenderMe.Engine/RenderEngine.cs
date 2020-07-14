@@ -1,6 +1,4 @@
-﻿#define Debug
-
-using OpenToolkit.Graphics.ES30;
+﻿using OpenToolkit.Graphics.ES30;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
 using RenderMe.Engine.Shaders;
@@ -13,7 +11,7 @@ namespace RenderMe.Engine
     public class RenderEngine : GameWindow
     {
         public IList<KeyboardEventMapping> KeyboardEventMappings { get; set; } = new List<KeyboardEventMapping>();
-        public IList<Entity.Entity> Entities { get; set; } = new List<Entity.Entity>();
+        private IList<Entity.Entity> Entities { get; set; } = new List<Entity.Entity>();
 
         public ShaderManager ShaderManager { get; private set; }
 
@@ -22,11 +20,14 @@ namespace RenderMe.Engine
         public RenderEngine(int height, int width, string title)
             : base (new GameWindowSettings(), new NativeWindowSettings() { Size = new OpenToolkit.Mathematics.Vector2i(width, height), Title = title })
         {
-            #if Debug
-                Stopwatch = new Stopwatch();
-                Stopwatch.Start();
-                Console.WriteLine($"Total frame-time {Stopwatch.ElapsedMilliseconds}ms");
-            #endif
+            Stopwatch = new Stopwatch();
+            Stopwatch.Start();
+        }
+
+        public void AddEntity(Entity.Entity entity)
+        {
+            entity.Engine = this;
+            Entities.Add(entity);
         }
 
         public void UseShaders(string shaderFolderPath)
@@ -53,11 +54,6 @@ namespace RenderMe.Engine
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
-            // Restart stopwatch if in debug mode
-            #if Debug
-                Stopwatch.Restart();
-            #endif
-
             // Clear screen
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
@@ -70,11 +66,6 @@ namespace RenderMe.Engine
             // Swap buffers
             SwapBuffers();
             base.OnRenderFrame(args);
-
-            #if Debug
-                Console.SetCursorPosition(17, 0);
-                Console.Write($"{Stopwatch.ElapsedMilliseconds}ms  ");
-            #endif
         }
 
         protected override void OnResize(ResizeEventArgs e)

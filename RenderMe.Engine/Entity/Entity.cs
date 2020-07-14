@@ -13,6 +13,8 @@ namespace RenderMe.Engine.Entity
 
         public Shader Shader { get; set; }
 
+        public RenderEngine Engine { get; set; }
+
         private bool _isLoaded { get; set; }
         public bool IsLoaded
         {
