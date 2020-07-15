@@ -22,6 +22,9 @@ namespace RenderMe.Engine.Entity
             Vertices = vertices;
         }
 
-        public abstract override void Render();
+        public override void HandleKeyboardInputs()
+        {
+            return;
+        }
     }
 }

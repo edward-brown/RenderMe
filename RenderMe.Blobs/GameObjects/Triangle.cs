@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace RenderMe.Blobs.GameObjects
 {
-    public class Triangle : Entity2D
+    public class Triangle : Entity3D
     {
         private Vector2[] translations;
 
@@ -38,9 +38,11 @@ namespace RenderMe.Blobs.GameObjects
             {
                 for (var x = -10; x < 10; x += 2)
                 {
-                    var vec = new Vector2();
-                    vec.X = x / 10.0f;
-                    vec.Y = y / 10.0f;
+                    var vec = new Vector2
+                    {
+                        X = x / 10.0f,
+                        Y = y / 10.0f
+                    };
                     translations[index++] = vec;
                 }
             }
@@ -60,15 +62,25 @@ namespace RenderMe.Blobs.GameObjects
             // Bind
             base.Bind();
 
-            // Set position
-            var offset = (float)Math.Sin(Engine.Stopwatch.ElapsedMilliseconds / (float)1000) / 2.0f;
-
-            //var posLocation = GL.GetUniformLocation(Shader.Program, "pos");
-            //GL.Uniform3(posLocation, new Vector3(offset, 0.0f, 0.0f));
+            // Sin color offset
+            var offset = (float)Math.Sin(Engine.GetTime);
 
             // Set color
             var colorLocation = GL.GetUniformLocation(Shader.Program, "color");
             GL.Uniform4(colorLocation, new Vector4(offset, 0.0f, -offset, 1.0f));
+
+            // Projection
+            var model = Matrix4.Identity * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Engine.GetTime * 10));
+            var modelLocation = GL.GetUniformLocation(Shader.Program, "model");
+            var viewLocation = GL.GetUniformLocation(Shader.Program, "view");
+            var projectionLocation = GL.GetUniformLocation(Shader.Program, "projection");
+
+            var viewMatrix = Engine.Camera.GetViewMatrix();
+            var projectionMatrix = Engine.Camera.GetProjectionMatrix();
+
+            GL.UniformMatrix4(modelLocation, true, ref model);
+            GL.UniformMatrix4(viewLocation, true, ref viewMatrix);
+            GL.UniformMatrix4(projectionLocation, true, ref projectionMatrix);
 
             // Draw
             GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, 3, 100);

@@ -61,6 +61,8 @@ namespace RenderMe.Engine.Entity
 
         public abstract void Render();
 
+        public abstract void HandleKeyboardInputs();
+
         public void OnLoad()
         {
             VAO = GL.GenVertexArray();
