@@ -1,12 +1,12 @@
 ﻿using OpenToolkit.Mathematics;
+using OpenToolkit.Windowing.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RenderMe.Engine
+namespace RenderMe.Engine.Camera
 {
-    // I don't pretend to fully understand the maths behind this.
-    public class Camera
+    public abstract class BaseCamera
     {
         // Those vectors are directions pointing outwards from the camera to define how it rotated
         private Vector3 _front = -Vector3.UnitZ;
@@ -24,7 +24,7 @@ namespace RenderMe.Engine
         // The field of view of the camera (radians)
         private float _fov = MathHelper.PiOver2;
 
-        public Camera(Vector3 position, float aspectRatio)
+        protected BaseCamera(Vector3 position, float aspectRatio)
         {
             Position = position;
             AspectRatio = aspectRatio;
@@ -110,5 +110,7 @@ namespace RenderMe.Engine
             _right = Vector3.Normalize(Vector3.Cross(_front, Vector3.UnitY));
             _up = Vector3.Normalize(Vector3.Cross(_right, _front));
         }
+
+        public abstract void Update(FrameEventArgs args);
     }
 }

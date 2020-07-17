@@ -3,8 +3,8 @@ using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Desktop;
+using RenderMe.Engine.Camera;
 using RenderMe.Engine.Shaders;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -28,11 +28,7 @@ namespace RenderMe.Engine
         public float DeltaTime { get; set; }
         private long LastTime { get; set; }
 
-        public Camera Camera { get; private set; }
-
-        private bool _firstMove = true;
-
-        private Vector2 _lastPos;
+        public BaseCamera Camera { get; private set; }
 
         public RenderEngine(int height, int width, string title)
             : base (new GameWindowSettings(), new NativeWindowSettings() { Size = new OpenToolkit.Mathematics.Vector2i(width, height), Title = title })
@@ -40,7 +36,7 @@ namespace RenderMe.Engine
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
 
-            Camera = new Camera(Vector3.UnitZ * 3, width / (float)height);
+            Camera = new BasicCamera(Vector3.UnitZ * 3, width / (float)height, this);
         }
 
         public void AddEntity(Entity.Entity entity)
@@ -71,58 +67,8 @@ namespace RenderMe.Engine
                 }
             }
 
-            // Camera stuff - needs to be put into camera class
-            const float cameraSpeed = 1.5f;
-            const float sensitivity = 0.2f;
-
-            if (KeyboardState.IsKeyDown(Key.W))
-            {
-                Camera.Position += Camera.Front * cameraSpeed * (float)args.Time; // Forward
-            }
-
-            if (KeyboardState.IsKeyDown(Key.S))
-            {
-                Camera.Position -= Camera.Front * cameraSpeed * (float)args.Time; // Backwards
-            }
-            if (KeyboardState.IsKeyDown(Key.A))
-            {
-                Camera.Position -= Camera.Right * cameraSpeed * (float)args.Time; // Left
-            }
-            if (KeyboardState.IsKeyDown(Key.D))
-            {
-                Camera.Position += Camera.Right * cameraSpeed * (float)args.Time; // Right
-            }
-            if (KeyboardState.IsKeyDown(Key.Space))
-            {
-                Camera.Position += Camera.Up * cameraSpeed * (float)args.Time; // Up
-            }
-            if (KeyboardState.IsKeyDown(Key.LShift))
-            {
-                Camera.Position -= Camera.Up * cameraSpeed * (float)args.Time; // Down
-            }
-
-            // Mouse position -> Camera target
-            var mouse = MouseState;
-
-            if (IsFocused)
-            {
-                if (_firstMove) // this bool variable is initially set to true
-                {
-                    _lastPos = new Vector2(mouse.X, mouse.Y);
-                    _firstMove = false;
-                }
-                else
-                {
-                    // Calculate the offset of the mouse position
-                    var deltaX = mouse.X - _lastPos.X;
-                    var deltaY = mouse.Y - _lastPos.Y;
-                    _lastPos = new Vector2(mouse.X, mouse.Y);
-
-                    // Apply the camera pitch and yaw (we clamp the pitch in the camera class)
-                    Camera.Yaw += deltaX * sensitivity;
-                    Camera.Pitch -= deltaY * sensitivity; // reversed since y-coordinates range from bottom to top
-                }
-            }
+            // Update camera
+            Camera.Update(args);
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -150,7 +96,6 @@ namespace RenderMe.Engine
         protected override void OnLoad()
         {
             GL.ClearColor(1, 1, 1, 1);
-
             base.OnLoad();
         }
 
@@ -158,6 +103,7 @@ namespace RenderMe.Engine
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
+            // Unload all entities
             foreach (Entity.Entity entity in Entities)
             {
                 entity.OnUnload();
