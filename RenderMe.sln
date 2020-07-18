@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderMe.Engine", "RenderMe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderMe.Blobs", "RenderMe.Blobs\RenderMe.Blobs.csproj", "{FD2634A4-CE97-495C-927C-1D89FDBA979B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderMe.TargetedMovement", "RenderMe.TargetedMovement\RenderMe.TargetedMovement.csproj", "{41B05154-FD9D-492C-8396-0D2021373071}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderMe.TargetedMovement", "RenderMe.TargetedMovement\RenderMe.TargetedMovement.csproj", "{41B05154-FD9D-492C-8396-0D2021373071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderMe.Boids", "RenderMe.Boids\RenderMe.Boids.csproj", "{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderMe.Boids", "RenderMe.Boids\RenderMe.Boids.csproj", "{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{7E5C9D90-6816-4CB1-833C-1D3FEA438A7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FD2634A4-CE97-495C-927C-1D89FDBA979B} = {7E5C9D90-6816-4CB1-833C-1D3FEA438A7C}
+		{41B05154-FD9D-492C-8396-0D2021373071} = {7E5C9D90-6816-4CB1-833C-1D3FEA438A7C}
+		{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB} = {7E5C9D90-6816-4CB1-833C-1D3FEA438A7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C413B0B3-85F5-4EFC-8182-A3C4AA408ACE}
