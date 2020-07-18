@@ -8,8 +8,9 @@ namespace RenderMe.Boids.GameObjects
 {
     public class Boid : Entity2D
     {
-        public Boid(Shader shader) : base()
+        public Boid(int id, Shader shader) : base()
         {
+            Id = id;
             Shader = shader ?? throw new ArgumentNullException(nameof(shader));
         }
 

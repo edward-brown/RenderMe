@@ -26,11 +26,14 @@ namespace RenderMe.Engine.Shaders
             {
                 var dirInfo = new DirectoryInfo(dir);
                 var name = dirInfo.Name;
+
+                // Get shader types
                 var vertexShaderPath = dirInfo.GetFiles("*.vertex.glsl").First().FullName;
                 var fragmentShaderPath = dirInfo.GetFiles("*.fragment.glsl").First().FullName;
+                var geometryShaderPath = dirInfo.GetFiles("*.geometry.glsl").FirstOrDefault()?.FullName;
                 var computeShaderPath = dirInfo.GetFiles("*.compute.glsl").FirstOrDefault()?.FullName;
 
-                Shaders.Add(new Shader(name, vertexShaderPath, fragmentShaderPath));
+                Shaders.Add(new Shader(name, vertexShaderPath, fragmentShaderPath, geometryShaderPath));
 
                 // Add compute shader if it exists
                 if (computeShaderPath != null)

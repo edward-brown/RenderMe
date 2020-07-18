@@ -1,5 +1,7 @@
-﻿using RenderMe.Engine;
+﻿using RenderMe.Boids.Managers;
+using RenderMe.Engine;
 using System;
+using System.Linq;
 
 namespace RenderMe.Boids
 {
@@ -14,7 +16,11 @@ namespace RenderMe.Boids
         {
             var engine = new RenderEngine(1080, 1920, "Boids");
 
-            
+            engine.UseShaders(@"./Shaders");
+            engine.ShaderManager.OnLoad();
+
+            var boidManager = new BoidManager(engine.ShaderManager.Shaders.FirstOrDefault(x => x.Name.ToLower() == "boid") as Shader, 10);
+            boidManager.OnLoad();
 
             engine.Run();
         }

@@ -11,7 +11,7 @@ namespace RenderMe.Engine
         // Program id
         public int Program { get; private set; }
         
-        public string Name { get; }
+        public string Name { get; set; }
 
         // Paths
         private readonly string VertexPath;

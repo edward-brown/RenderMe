@@ -9,4 +9,16 @@
     <ProjectReference Include="..\RenderMe.Engine\RenderMe.Engine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Shaders\Boid\Boid.compute.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Shaders\Boid\Boid.fragment.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Shaders\Boid\Boid.vertex.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
