@@ -30,13 +30,13 @@ namespace RenderMe.Engine
 
         public BaseCamera Camera { get; private set; }
 
-        public RenderEngine(int height, int width, string title)
-            : base (new GameWindowSettings(), new NativeWindowSettings() { Size = new OpenToolkit.Mathematics.Vector2i(width, height), Title = title })
+        public RenderEngine(int height, int width, string title, Vector3? cameraPos = null)
+            : base (new GameWindowSettings(), new NativeWindowSettings() { Size = new Vector2i(width, height), Title = title })
         {
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
 
-            Camera = new BasicCamera(Vector3.UnitZ * 3, width / (float)height, this);
+            Camera = new BasicCamera(cameraPos ?? new Vector3(1, 1, 1), width / (float)height, this);
         }
 
         public void AddEntity(Entity.Entity entity)

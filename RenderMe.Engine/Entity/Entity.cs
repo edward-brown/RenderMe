@@ -46,6 +46,12 @@ namespace RenderMe.Engine.Entity
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
+        
+        // Camera matrixes
+        public Matrix4 Model { get; protected set; }
+        public int ModelLocation { get; protected set; }
+        public int ViewLocation { get; protected set; }
+        public int ProjectionLocation { get; protected set; }
 
         protected Entity()
         {
@@ -71,6 +77,10 @@ namespace RenderMe.Engine.Entity
             GL.BindVertexArray(VAO);
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Length * sizeof(float), Vertices, BufferUsageHint.StaticDraw);
+
+            ModelLocation = GL.GetUniformLocation(Shader.Program, "model");
+            ViewLocation = GL.GetUniformLocation(Shader.Program, "view");
+            ProjectionLocation = GL.GetUniformLocation(Shader.Program, "projection");
         }
 
         public void OnUnload()

@@ -1,11 +1,14 @@
 ﻿using RenderMe.Blobs.GameObjects;
 using RenderMe.Engine;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace RenderMe.Blobs
 {
+    /// <summary>
+    /// This was the first program I did with opengl.
+    /// Its essentially just a test / learning.
+    /// </summary>
     static class Program
     {
         [STAThread]
