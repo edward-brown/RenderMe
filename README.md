@@ -1,5 +1,6 @@
 # RenderMe
 RenderMe engine and a collection of projects made with it.
+##### Please note that some projects might not compile / work. Changes to the core engine might not be reflected in older projects.
 
 ## Usage
 
