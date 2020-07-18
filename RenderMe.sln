@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderMe.Blobs", "RenderMe.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderMe.TargetedMovement", "RenderMe.TargetedMovement\RenderMe.TargetedMovement.csproj", "{41B05154-FD9D-492C-8396-0D2021373071}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderMe.Boids", "RenderMe.Boids\RenderMe.Boids.csproj", "{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{41B05154-FD9D-492C-8396-0D2021373071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41B05154-FD9D-492C-8396-0D2021373071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41B05154-FD9D-492C-8396-0D2021373071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A79D18D-AFC7-45C3-873D-AB0A8F68B2BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

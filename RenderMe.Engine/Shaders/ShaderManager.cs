@@ -3,29 +3,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace RenderMe.Engine.Shaders
 {
     public class ShaderManager : IDisposable
     {
         public string ShaderFolderPath { get; set; }
-        public List<Shader> Shaders { get; set; } = new List<Shader>();
+        public List<IShader> Shaders { get; set; } = new List<IShader>();
 
         public ShaderManager(string shaderFolderPath)
         {
             ShaderFolderPath = shaderFolderPath;
         }
 
-        public void Dispose()
-        {
-            foreach(Shader shader in Shaders)
-            {
-                shader.Dispose();
-            }
-        }
+        
 
-        protected void LoadShaders(bool debug)
+        protected void LoadShaders()
         {
             // Create shader objects
             var dirs = Directory.GetDirectories(ShaderFolderPath);
@@ -35,60 +28,43 @@ namespace RenderMe.Engine.Shaders
                 var name = dirInfo.Name;
                 var vertexShaderPath = dirInfo.GetFiles("*.vertex.glsl").First().FullName;
                 var fragmentShaderPath = dirInfo.GetFiles("*.fragment.glsl").First().FullName;
-
+                var computeShaderPath = dirInfo.GetFiles("*.compute.glsl").FirstOrDefault()?.FullName;
 
                 Shaders.Add(new Shader(name, vertexShaderPath, fragmentShaderPath));
+
+                // Add compute shader if it exists
+                if (computeShaderPath != null)
+                {
+                    Shaders.Add(new ComputeShader(computeShaderPath));
+                }
             }
 
             // Load shader files
-            foreach (Shader shader in Shaders)
+            foreach (IShader shader in Shaders)
             {
-                if (debug)
-                {
-                    shader.LoadTimed();
-                }
-                else
-                {
-                    shader.Load();
-                }
+                shader.Load();
             }
         }
 
-        protected void CompileShaders(bool debug)
+        protected void CompileShaders()
         {
-            foreach(Shader shader in Shaders)
+            foreach(IShader shader in Shaders)
             {
-                if (debug)
-                {
-                    shader.CompileTimed();
-                }
-                else
-                {
-                    shader.Compile();
-                }
+                shader.Compile();
             }
         }
 
-        public void OnLoad(bool debug = false)
+        public void OnLoad()
         {
-            if (debug)
-            {
-                var sw = new Stopwatch();
-                sw.Start();
-                Console.WriteLine("Loading & compiling shaders");
-                Console.WriteLine("---------------------------");
+            LoadShaders();
+            CompileShaders();
+        }
 
-                LoadShaders(true);
-                CompileShaders(true);
-
-                sw.Stop();
-                Console.WriteLine("---------------------------");
-                Console.WriteLine($"Loaded & compiled all shaders in {sw.ElapsedMilliseconds}ms");
-            }
-            else
+        public void Dispose()
+        {
+            foreach (IShader shader in Shaders)
             {
-                LoadShaders(false);
-                CompileShaders(false);
+                shader.Dispose();
             }
         }
     }

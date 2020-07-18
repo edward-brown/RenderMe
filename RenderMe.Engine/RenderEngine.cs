@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace RenderMe.Engine
 {
-    public class RenderEngine : GameWindow
+    public class RenderEngine : GameWindow    
     {
         private IList<Entity.Entity> Entities { get; set; } = new List<Entity.Entity>();
 
@@ -108,6 +108,9 @@ namespace RenderMe.Engine
             {
                 entity.OnUnload();
             }
+
+            // Dispose shaders
+            ShaderManager.Dispose();
 
             base.OnUnload();
         }
