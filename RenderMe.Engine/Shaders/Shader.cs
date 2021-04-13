@@ -10,7 +10,7 @@ namespace RenderMe.Engine
     {
         // Program id
         public int Program { get; private set; }
-        
+
         public string Name { get; set; }
 
         // Paths
@@ -96,7 +96,7 @@ namespace RenderMe.Engine
             GL.AttachShader(Program, VertexShader);
             GL.AttachShader(Program, FragmentShader);
 
-            if(GeometryPath != null)
+            if (GeometryPath != null)
             {
                 GL.AttachShader(Program, GeometryShader);
             }

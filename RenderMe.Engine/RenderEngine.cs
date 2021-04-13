@@ -5,24 +5,26 @@ using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Desktop;
 using RenderMe.Engine.Camera;
 using RenderMe.Engine.Shaders;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace RenderMe.Engine
 {
-    public class RenderEngine : GameWindow    
+    public class RenderEngine : GameWindow
     {
+
         private IList<Entity.Entity> Entities { get; set; } = new List<Entity.Entity>();
 
         public ShaderManager ShaderManager { get; private set; }
 
         public Stopwatch Stopwatch { get; set; }
-        public float GetTime 
+        public float GetTime
         {
             get
             {
                 return Stopwatch.ElapsedMilliseconds / 1000.0f;
-            } 
+            }
         }
 
         public float DeltaTime { get; set; }
@@ -30,13 +32,16 @@ namespace RenderMe.Engine
 
         public BaseCamera Camera { get; private set; }
 
+        public FrameLimiter FrameLimiter { get; private set; }
+
         public RenderEngine(int height, int width, string title, Vector3? cameraPos = null)
-            : base (new GameWindowSettings(), new NativeWindowSettings() { Size = new Vector2i(width, height), Title = title })
+            : base(new GameWindowSettings(), new NativeWindowSettings() { Size = new Vector2i(width, height), Title = title })
         {
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
 
             Camera = new BasicCamera(cameraPos ?? new Vector3(1, 1, 1), width / (float)height, this);
+            FrameLimiter = new FrameLimiter(120, true);
         }
 
         public void AddEntity(Entity.Entity entity)
@@ -52,11 +57,18 @@ namespace RenderMe.Engine
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
+            // Limit frames if needed
+            if (FrameLimiter.LimitFrame(DeltaTime))
+            {
+                return;
+            }
+
             base.OnUpdateFrame(args);
 
             // Calculate delta time
             DeltaTime = (Stopwatch.ElapsedMilliseconds - LastTime) / 1000.0f;
             LastTime = Stopwatch.ElapsedMilliseconds;
+
 
             // Call functions for pressed keys
             if (KeyboardState.IsAnyKeyDown)

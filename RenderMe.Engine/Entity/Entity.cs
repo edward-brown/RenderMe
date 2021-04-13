@@ -1,5 +1,6 @@
 ﻿using OpenToolkit.Graphics.ES30;
 using OpenToolkit.Mathematics;
+using RenderMe.Engine.Shaders;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace RenderMe.Engine.Entity
         public int Id { get; set; }
         public int? ParentId { get; set; }
 
-        public Shader Shader { get; set; }
+        public IShader Shader { get; set; }
 
         public RenderEngine Engine { get; set; }
 
@@ -38,7 +39,7 @@ namespace RenderMe.Engine.Entity
         // Vertex Objects
         public int VBO { get; protected set; }
         public int VAO { get; protected set; }
-        
+
         // Vertices
         public float[] Vertices { get; set; }
 
@@ -46,7 +47,7 @@ namespace RenderMe.Engine.Entity
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
-        
+
         // Camera matrixes
         public Matrix4 Model { get; protected set; }
         public int ModelLocation { get; protected set; }

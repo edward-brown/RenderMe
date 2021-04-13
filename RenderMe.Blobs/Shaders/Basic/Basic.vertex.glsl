@@ -9,7 +9,6 @@ uniform mat4 projection;
 
 void main(void)
 {
-    // Flip the vertices
     vec2 offset = offsets[gl_InstanceID];
-    gl_Position = vec4(position.x + offset.x, position.y + offset.y, 0.0, 1.0) * model * view * projection;
+    gl_Position = vec4(position.x + offset.x, position.y + offset.y, offset.x, 1.0) * model * view * projection;
 }

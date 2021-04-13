@@ -14,7 +14,7 @@ namespace RenderMe.Blobs
         [STAThread]
         static void Main(string[] args)
         {
-            RenderEngine engine = new RenderEngine(200, 200, "Triangle");
+            RenderEngine engine = new RenderEngine(200, 200, "Triangle", new OpenToolkit.Mathematics.Vector3(0, 0, 1.5f));
 
             engine.UseShaders(@"./Shaders");
             engine.ShaderManager.OnLoad();

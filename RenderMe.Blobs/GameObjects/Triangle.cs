@@ -2,6 +2,7 @@
 using OpenToolkit.Mathematics;
 using RenderMe.Engine;
 using RenderMe.Engine.Entity;
+using RenderMe.Engine.Shaders;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace RenderMe.Blobs.GameObjects
     {
         private Vector2[] translations;
 
-        public Triangle(Shader shader) : base()
+        public Triangle(Engine.Shaders.IShader shader) : base()
         {
             Vertices = new float[]
             {

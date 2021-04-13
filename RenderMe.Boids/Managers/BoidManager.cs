@@ -29,7 +29,7 @@ namespace RenderMe.Boids.Managers
             }
         }
 
-        public BoidManager(Shader shader, int numberOfBoids)
+        public BoidManager(IShader shader, int numberOfBoids)
         {
             Shader = shader ?? throw new ArgumentNullException(nameof(shader));
             _numberOfBoids = numberOfBoids;

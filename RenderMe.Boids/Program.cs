@@ -19,7 +19,7 @@ namespace RenderMe.Boids
             engine.UseShaders(@"./Shaders");
             engine.ShaderManager.OnLoad();
 
-            var boidManager = new BoidManager(engine.ShaderManager.Shaders.FirstOrDefault(x => x.Name.ToLower() == "boid") as Shader, 10);
+            var boidManager = new BoidManager(engine.ShaderManager.Shaders.FirstOrDefault(x => x.Name.ToLower() == "boid") as IShader, 10);
             boidManager.OnLoad();
 
             engine.Run();

@@ -18,7 +18,7 @@ namespace RenderMe.TargetedMovement.GameObjects
         private Vector2 Target { get; set; }
         private int PositionLocation { get; set; }
 
-        public Triangle(Shader shader) : base()
+        public Triangle(IShader shader) : base()
         {
             Shader = shader;
             Position = new Vector2(0, 0);
@@ -87,7 +87,7 @@ namespace RenderMe.TargetedMovement.GameObjects
 
             // Set position
             GL.Uniform2(PositionLocation, Position);
-            
+
             // Projection -> Should be abstracted out
             var model = Matrix4.Identity;
             var modelLocation = GL.GetUniformLocation(Shader.Program, "model");
